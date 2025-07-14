@@ -4,7 +4,7 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
-  <Footer class="footer"/>
+  <Footer class="footer shadow-2xl"/>
 </template>
 
 <script setup lang="ts">

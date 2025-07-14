@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     url: 'https://localhost:8000'
   },
 
-  modules: ['shadcn-nuxt', '@nuxtjs/i18n'],
+  modules: ['shadcn-nuxt', '@nuxtjs/i18n', '@pinia/nuxt'],
   shadcn: {
     /**
      * Prefix for all the imported component

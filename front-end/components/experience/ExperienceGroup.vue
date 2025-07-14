@@ -34,7 +34,6 @@ async function getIcon(id: number) {
 
     const {data, refresh} = await useFetch(`http://localhost:8000/api/experience/download/${id}`, {
       onResponse: function ({response}) {
-        console.log(response._data)
         currentCardImageURL.value = response._data;
       },
     })

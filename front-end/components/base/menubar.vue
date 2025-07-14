@@ -9,7 +9,7 @@ import {
   navigationMenuTriggerStyle,
 } from '~/components/shadcn/navigation-menu'
 import {Separator} from "~/components/shadcn/separator";
-import {PencilSquareIcon} from "@heroicons/vue/24/solid";
+import {PencilSquareIcon, HomeIcon, CogIcon, UserCircleIcon, InformationCircleIcon} from "@heroicons/vue/24/solid";
 
 
 const components: { title: string, href: string, description: string }[] = [
@@ -28,7 +28,7 @@ const components: { title: string, href: string, description: string }[] = [
     href: '/experience/subjects',
     description: 'All technical and non-technical obtained experiences.',
   },
-]
+];
 
 const languages: { name: string, href: string, src: string }[] = [
   {
@@ -41,18 +41,32 @@ const languages: { name: string, href: string, src: string }[] = [
     href: '/nl',
     src: new URL('~/assets/images/nl.svg', import.meta.url).href,
   },
-]
+];
+
+const home_hover = ref(false);
+const title_hover = ref(false);
+const personal_hover = ref(false);
+const information_hover = ref(false);
 
 const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
 </script>
 
 <template>
-  <div class="justify-center px-8 py-4 flex flex-col items-center">
-    <div class="p-8 font-bold text-4xl text-[#808000]">
-      <h1>Technique</h1>
+  <div class="justify-center px-20 py-4 flex flex-col items-center">
+    <div class="p-12 font-bold text-4xl md:text-6xl text-[#808000]" @mouseover="title_hover = true" @mouseleave="title_hover = false">
+      <h1 class="flex flex-row hover:text-green-500">
+        <CogIcon class="w-8 h-8 animate-spin" v-if="title_hover"/>
+        <a href="/">Technique</a>
+      </h1>
     </div>
     <NavigationMenu>
       <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/" :class="navigationMenuTriggerStyle()" class="hover:text-green-500 flex flex-row" @mouseover="home_hover = true" @mouseleave="home_hover = false">
+              <HomeIcon class="w-4 h-4 hover:text-green-500 " v-if="home_hover"/>
+              <p>Home</p>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger class="hover:text-green-500">Experiences</NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -95,26 +109,28 @@ const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
               </li>
               <li v-for="blog in blogs" :key="blog.title" >
                 <NavigationMenuLink as-child>
-                  <NuxtLink
-                      :to="'/blogs/' + blog.id"
+                  <a
+                      :href="'/blogs/' + blog.id"
                       class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground hover:text-green-500"
                   >
                     <p v-html="blog.title" />
                     <p v-html="blog.description" class="line-clamp-2 text-sm leading-snug text-muted-foreground" />
-                  </NuxtLink>
+                  </a>
                 </NavigationMenuLink>
               </li>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/personal" :class="navigationMenuTriggerStyle()" class="hover:text-green-500">
-            Personal
+          <NavigationMenuLink href="/personal" :class="navigationMenuTriggerStyle()" class="hover:text-green-500 flex flex-row" @mouseover="personal_hover = true" @mouseleave="personal_hover = false">
+            <UserCircleIcon class="w-4 h-4 hover:text-green-500" v-if="personal_hover"/>
+            <p>Personal</p>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/home/technique/dev/technique/front-end/pages/contact" :class="navigationMenuTriggerStyle()" class="hover:text-green-500">
-            Contact
+          <NavigationMenuLink href="/contact" :class="navigationMenuTriggerStyle()" class="hover:text-green-500 flex flex-row" @mouseover="information_hover = true" @mouseleave="information_hover = false">
+            <InformationCircleIcon class="w-4 h-4 hover:text-green-500" v-if="information_hover"/>
+            <p>Contact</p>
           </NavigationMenuLink>
         </NavigationMenuItem >
         <NavigationMenuItem >
@@ -140,6 +156,6 @@ const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-    <Separator class="my-4" />
+    <Separator class="my-6" />
   </div>
 </template>

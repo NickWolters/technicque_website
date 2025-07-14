@@ -1,7 +1,25 @@
 <script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
+import RefIconButton from "~/components/other/RefIconButton.vue";
 
-const { width, height } = useWindowSize()
+const { width } = useWindowSize()
+
+interface Contact {
+  id: number,
+  name: string,
+  href: string,
+  media_url: string,
+}
+
+const { data } = await useFetch('http:localhost:8000/api/contact');
+const contactArray = data.value as Array<Contact>;
+
+const contactIconList = contactArray.map((value) => {
+  return {
+    contact: value,
+  }
+})
+
 
 </script>
 
@@ -11,7 +29,7 @@ const { width, height } = useWindowSize()
       <div class="footer_branding">
         <img src="../../assets/images/t-solid.svg" class="brand_icon content-center"/>
         <Separator orientation="vertical" class="bg-gray-500" />
-        <div class="text-center text-xl lg:text-3xl font-semibold content-center">Technique</div>
+        <a href="/" class="text-center text-xl lg:text-3xl font-semibold content-center hover:text-shadow-sm">Technique</a>
       </div>
     </div>
     <div class="lg:col-span-4 col-span-3 row-span-2 lg:row-span-3 lg:col-start-3 col-start-1 lg:mt-4">
@@ -19,32 +37,25 @@ const { width, height } = useWindowSize()
         <div class="footer_refs">
           <a href="/experience/work" class="font-normal lg:font-semibold">Experience</a>
           <div class="flex-row grid gap-4 py-5" v-if="width >= 1024">
-            <a href="/experience/work" class="font-light text-sm">Work experience</a>
-            <a href="/experience/studies" class="font-light text-sm">Studies</a>
-            <a href="/experience/subjects" class="font-light text-sm">Techniques</a>
+            <a href="/experience/work" class="hover:underline hover:font-medium font-light text-sm">Work experience</a>
+            <a href="/experience/studies" class="hover:underline hover:font-medium  font-light text-sm">Studies</a>
+            <a href="/experience/subjects" class="hover:underline hover:font-medium  font-light text-sm">Techniques</a>
           </div>
         </div>
         <div class="footer_refs">
-          <a href="/blogs">Blogs</a>
+          <a class="hover:underline hover:font-bold font-medium" href="/blogs">Blogs</a>
         </div>
         <div class="footer_refs">
-          <a href="/personal">Personal</a>
+          <a class="hover:underline hover:font-bold font-medium" href="/personal">Personal</a>
         </div>
       </div>
     </div>
-    <div class="lg:col-span-2 col-span-3 row-span-1 lg:row-span-3 lg:col-start-7 pl-6 lg:pl-0 lg:pt-9 flex flex-col">
+    <div class="lg:col-span-2 col-span-3 row-span-1 lg:row-span-3 lg:col-start-7 pl-6 lg:pl-0 lg:pt-9 flex flex-col lg:w-50 lg:gap-3">
       <div class="py-2 font-semibold">Contact</div>
-      <Separator v-if="width >= 1024" class="mb-4 pr-8 bg-gray-300 !w-1/2" orientation="horizontal"/>
-      <div class="flex px-1 py-2 gap-5 content-center">
-        <a href="https://www.linkedin.com/in/nick-wolters-04432a22/" class="bg-gray-200 hover:bg-gray-400 p-3 rounded-full">
-          <img class="footer_icon" src="../../assets/images/contact/linkedin-in-brands.svg" />
-        </a>
-        <a class="bg-gray-200 hover:bg-gray-400 p-3 rounded-full ">
-          <img class="footer_icon" src="../../assets/images/contact/instagram-brands.svg"/>
-        </a>
-        <a class="bg-gray-200 hover:bg-gray-400  p-3 rounded-full">
-          <img class="footer_icon" src="../../assets/images/contact/envelope-solid.svg"/>
-        </a>
+      <div class="flex flex-row py-2 gap-4">
+        <div v-for="contact in contactIconList">
+         <RefIconButton  :reference="contact.contact" />
+        </div>
       </div>
     </div>
   </div>
