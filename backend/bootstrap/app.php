@@ -24,7 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
             CorsMiddleware::class,
         ]);
 
-
+        $middleware->validateCsrfTokens(except: [
+            'api/*', 'contact/form', 'resend/*'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

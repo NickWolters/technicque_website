@@ -25,7 +25,7 @@ class BlogResource extends Resource
 
     protected static ?string $navigationGroup = 'Blog';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-pencil-square';
 
     public static function form(Form $form): Form
     {
@@ -34,7 +34,7 @@ class BlogResource extends Resource
                 RichEditor::make('title'),
                 TagsInput::make('tags'),
                 RichEditor::make('description')->columnSpanFull(),
-                Builder::make('content')
+                Builder::make('content')->collapsible()
                     ->blocks([
                         Builder\Block::make('section')
                             ->schema([
@@ -63,6 +63,8 @@ class BlogResource extends Resource
                                     ->label('Alt text')
                                     ->required(),
                             ]),
+                        Builder\Block::make('empty')
+                            ->schema([]),
                         Builder\Block::make('quote')
                             ->schema([
                                 RichEditor::make('content')

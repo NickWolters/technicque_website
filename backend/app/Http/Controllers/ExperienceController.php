@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Experience;
 use Carbon\Carbon;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 
 class ExperienceController extends Controller
 {
