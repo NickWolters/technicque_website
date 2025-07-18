@@ -9,41 +9,41 @@ import {
   navigationMenuTriggerStyle,
 } from '~/components/shadcn/navigation-menu'
 import {Separator} from "~/components/shadcn/separator";
-import {PencilSquareIcon, HomeIcon, CogIcon, UserCircleIcon, InformationCircleIcon} from "@heroicons/vue/24/solid";
+import {PencilSquareIcon, CogIcon, UserCircleIcon, InformationCircleIcon} from "@heroicons/vue/24/solid";
 
+const { t, locale, locales } = useI18n();
+const localePath = useLocalePath();
+const switchLocalePath = useSwitchLocalePath();
 
-const components: { title: string, href: string, description: string }[] = [
+const components: { title: string, href: string, subtext: string }[] = [
   {
-    title: 'Work Experience',
+    title: t('menu.experience_tabs.work'),
     href: '/experience/work',
-    description: 'A list of all current and previous working experiences.',
+    subtext: t('menu.experience_tabs.work_subtext'),
   },
   {
-    title: 'Studies',
+    title: t('menu.experience_tabs.studies'),
     href: '/experience/studies',
-    description: 'A list of all obtained studies and certificates.',
+    subtext: t('menu.experience_tabs.studies_subtext'),
   },
   {
-    title: 'Techniques',
+    title: t('menu.experience_tabs.techniques'),
     href: '/experience/subjects',
-    description: 'All technical and non-technical obtained experiences.',
+    subtext: t('menu.experience_tabs.techniques_subtext'),
   },
 ];
 
-const languages: { name: string, href: string, src: string }[] = [
+const language_images: { code: string, src: string }[] = [
   {
-    name: 'English',
-    href: '/en',
+    code: 'en',
     src: new URL('~/assets/images/gb.svg', import.meta.url).href,
   },
   {
-    name: 'Dutch',
-    href: '/nl',
+    code: 'nl',
     src: new URL('~/assets/images/nl.svg', import.meta.url).href,
   },
 ];
 
-const home_hover = ref(false);
 const title_hover = ref(false);
 const personal_hover = ref(false);
 const information_hover = ref(false);
@@ -62,24 +62,18 @@ const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/" :class="navigationMenuTriggerStyle()" class="hover:text-green-500 flex flex-row" @mouseover="home_hover = true" @mouseleave="home_hover = false">
-              <HomeIcon class="w-4 h-4 hover:text-green-500 " v-if="home_hover"/>
-              <p>Home</p>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger class="hover:text-green-500">Experiences</NavigationMenuTrigger>
+          <NavigationMenuTrigger class="hover:text-green-500">{{t("menu.experience")}}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul class="grid w-[200px] gap-3 p-4 md:w-[300px] md:grid-cols-1 lg:w-[400px] ">
               <li v-for="component in components" :key="component.title">
                 <NavigationMenuLink as-child>
                   <a
-                      :href="component.href"
+                      :href="localePath(component.href)"
                       class="block select-none space-y-1  rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground hover:text-green-500"
                   >
                     <div class="text-sm font-medium leading-none">{{ component.title }}</div>
                     <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                      {{ component.description }}
+                      {{ component.subtext }}
                     </p>
                   </a>
                 </NavigationMenuLink>
@@ -88,21 +82,21 @@ const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger class="hover:text-green-500">Blog</NavigationMenuTrigger>
+          <NavigationMenuTrigger class="hover:text-green-500">{{ t('menu.blog') }}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul class="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[minmax(0,.75fr)_minmax(0,1fr)]">
               <li class="row-span-3">
                 <NavigationMenuLink as-child>
                   <a
                       class="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md hover:text-green-500"
-                      href="/blogs"
+                      :href="localePath('/blogs')"
                   >
                     <PencilSquareIcon class="h-6 w-6 text-green-500" />
                     <div class="mb-2 mt-4 text-lg font-medium">
-                      Technique Blogs
+                      {{ t('menu.blog_tabs.title') }}
                     </div>
                     <p class="text-sm leading-tight text-muted-foreground">
-                      Personal blogs related to either tech, design or any other subject that might intrest me personally.
+                      {{ t('menu.blog_tabs.subtext') }}
                     </p>
                   </a>
                 </NavigationMenuLink>
@@ -110,7 +104,7 @@ const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
               <li v-for="blog in blogs" :key="blog.title" >
                 <NavigationMenuLink as-child>
                   <a
-                      :href="'/blogs/' + blog.id"
+                      :href="localePath('/blogs/' + blog.id)"
                       class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground hover:text-green-500"
                   >
                     <p v-html="blog.title" />
@@ -122,30 +116,31 @@ const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/personal" :class="navigationMenuTriggerStyle()" class="hover:text-green-500 flex flex-row" @mouseover="personal_hover = true" @mouseleave="personal_hover = false">
+          <NavigationMenuLink :href="localePath('/personal')" :class="navigationMenuTriggerStyle()" class="hover:text-green-500 flex flex-row" @mouseover="personal_hover = true" @mouseleave="personal_hover = false">
             <UserCircleIcon class="w-4 h-4 hover:text-green-500" v-if="personal_hover"/>
-            <p>Personal</p>
+            <p>{{ t('menu.personal') }}</p>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="/contact" :class="navigationMenuTriggerStyle()" class="hover:text-green-500 flex flex-row" @mouseover="information_hover = true" @mouseleave="information_hover = false">
+          <NavigationMenuLink :href="localePath('/contact')" :class="navigationMenuTriggerStyle()" class="hover:text-green-500 flex flex-row" @mouseover="information_hover = true" @mouseleave="information_hover = false">
             <InformationCircleIcon class="w-4 h-4 hover:text-green-500" v-if="information_hover"/>
-            <p>Contact</p>
+            <p>{{ t('menu.contact') }}</p>
           </NavigationMenuLink>
         </NavigationMenuItem >
         <NavigationMenuItem >
-          <NavigationMenuTrigger><img src="../../assets/images/gb.svg" width="24" height="24" class="rounded-2xl"/></NavigationMenuTrigger>
+          <NavigationMenuTrigger><img :src="language_images.find(i => i.code === locale)?.src" width="24" height="24" class="rounded-2xl"/></NavigationMenuTrigger>
           <NavigationMenuContent class="!right-0 left-auto">
+            <p class="text-2xl py-2 text-center font-semibold text-[#808000]">{{ t('language.title') }}</p>
             <ul class="grid w-[150px] gap-3 p-4 md:w-[200px] md:grid-cols-1 lg:w-[300px]">
-              <li v-for="language in languages" :key="language.name" class="items-end" dir="rtl">
+              <li v-for="{code} in locales" :key="code" class="items-end" dir="rtl">
                 <NavigationMenuLink as-child >
                   <a
-                      :href="language.href"
+                      :href="switchLocalePath(code)"
                       class="flex select-none rounded-md leading-none no-underline outline-none transition-colors hover:bg-accent
                      hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground justify-items-stretch">
-                    <div class="inline-flex gap-3 ">
-                      <img :src="language.src" width="32" height="32" class="rounded-full"/>
-                      <div class="p-2 text-sm font-medium leading-none">{{ language.name }}</div>
+                    <div class="inline-flex gap-3 hover:text-green-500 font-light hover:font-bold">
+                      <img :src="language_images.find(i => i.code === code)?.src" width="32" height="32" class="rounded-full"/>
+                      <div class="p-2 text-sm  leading-none">{{ t('language.' + code) }}</div>
                     </div>
                   </a>
                   <Separator class="my-2 bg-gray-200"/>

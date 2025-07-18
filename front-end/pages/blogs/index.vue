@@ -4,13 +4,13 @@
   import PaginationPrevious from "~/components/shadcn/pagination/PaginationPrevious.vue";
   import PaginationNext from "~/components/shadcn/pagination/PaginationNext.vue";
   import PaginationItem from "~/components/shadcn/pagination/PaginationItem.vue";
-  import PaginationEllipsis from "~/components/shadcn/pagination/PaginationEllipsis.vue";
   import {ClockIcon} from "@heroicons/vue/24/solid";
-  import PaginationLast from "~/components/shadcn/pagination/PaginationLast.vue";
 
   const { data : blogs } = await useFetch('http:localhost:8000/api/blogs/');
   const first_blog = blogs.value[0];
   const other_blogs = blogs.value.filter((blog, index) => index !== 0)
+
+  const { t } = useI18n();
 
   //Pagination Information
   const blogs_per_page = 6;
@@ -43,7 +43,7 @@
         <i18n-d class="py-3 md:py-1" tag="p" :value="new Date(first_blog.created_at)"></i18n-d>
         <Separator class="bg-white pr-0.3" orientation="vertical"/>
         <div class="font-semibold py-1">
-          Last updated at: <i18n-d tag="span" :value="new Date(first_blog.updated_at)" />
+          {{ t('blog.last_update') }} <i18n-d tag="span" :value="new Date(first_blog.updated_at)" />
         </div>
       </div>
     </div>

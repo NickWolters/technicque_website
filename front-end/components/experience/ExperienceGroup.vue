@@ -28,11 +28,11 @@ defineProps<{
 }>()
 
 const currentCardImageURL = ref('');
+const { t } = useI18n();
 
 async function getIcon(id: number) {
   if (id != null && id >= 1) {
-
-    const {data, refresh} = await useFetch(`http://localhost:8000/api/experience/download/${id}`, {
+    await useFetch(`http://localhost:8000/api/experience/download/${id}`, {
       onResponse: function ({response}) {
         currentCardImageURL.value = response._data;
       },
@@ -72,7 +72,7 @@ async function getIcon(id: number) {
                 <div class="flex items-center pt-2">
                   <CalendarIcon class="mr-2 h-4 w-4 opacity-70" />
                   <span class="text-xs text-muted-foreground">
-                    Since <span v-html="experience.start_year"></span>
+                    {{ t('experience.since') }} <span v-html="experience.start_year"></span>
                   </span>
                 </div>
               </div>

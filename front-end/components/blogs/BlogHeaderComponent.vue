@@ -14,6 +14,7 @@ defineProps<{
   }
 }>()
 
+const {t} = useI18n();
 </script>
 
 <template>
@@ -45,7 +46,7 @@ defineProps<{
           <i18n-d class="py-3 md:py-1" tag="p" :value="new Date(blog.created_at)"></i18n-d>
           <Separator class="bg-white pr-0.3" orientation="vertical"/>
           <div class="font-semibold py-1">
-            Last updated at: <i18n-d tag="span" :value="new Date(blog.updated_at)" />
+            {{ t('blog.last_update') }} <i18n-d tag="span" :value="new Date(blog.updated_at)" />
           </div>
         </div>
       </div>

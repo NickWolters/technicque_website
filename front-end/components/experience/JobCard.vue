@@ -3,22 +3,6 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "~/components/shadcn/card";
 import {Badge} from "~/components/shadcn/badge";
 
-
-
-const currentCardImageURL = ref('');
-
-async function getIcon(id: number) {
-  if (id != null && id >= 1) {
-
-    const {data, refresh} = await useFetch(`http://localhost:8000/api/work/download/${id}`, {
-      onResponse: function ({response}) {
-        console.log(response._data)
-        currentCardImageURL.value = response._data;
-      },
-    })
-  }
-}
-
 defineProps<{
  job : {
    iconUrl: string,
@@ -39,8 +23,6 @@ defineProps<{
    }
  }
 }>()
-
-
 </script>
 
 <template>

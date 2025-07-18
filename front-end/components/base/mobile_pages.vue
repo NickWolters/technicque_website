@@ -4,26 +4,30 @@ import {Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTri
 import {ArrowRightIcon, Bars3Icon, ChevronUpDownIcon, XMarkIcon} from "@heroicons/vue/24/solid";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "~/components/shadcn/collapsible";
 import {Button} from "~/components/shadcn/button";
+import {NavigationMenuLink} from "~/components/shadcn/navigation-menu";
 
 const isOpen = ref(false)
 
-const components: { title: string, href: string, description: string }[] = [
+const { t } = useI18n();
+const localePath = useLocalePath();
+
+const components: { title: string, href: string, subtext: string }[] = [
   {
-    title: 'Work Experience',
+    title: t('menu.experience_tabs.work'),
     href: '/experience/work',
-    description: 'A list of all current and previous working experiences.',
+    subtext: t('menu.experience_tabs.work_subtext'),
   },
   {
-    title: 'Studies',
+    title: t('menu.experience_tabs.studies'),
     href: '/experience/studies',
-    description: 'A list of all obtained studies and certificates.',
+    subtext: t('menu.experience_tabs.studies_subtext'),
   },
   {
-    title: 'Techniques',
+    title: t('menu.experience_tabs.techniques'),
     href: '/experience/subjects',
-    description: 'All technical and non-technical obtained experiences.',
+    subtext: t('menu.experience_tabs.techniques_subtext'),
   },
-]
+];
 </script>
 
 <template>
@@ -37,7 +41,7 @@ const components: { title: string, href: string, description: string }[] = [
     </DrawerTrigger>
     <DrawerContent class="bg-[#F4EFE6]">
       <DrawerHeader>
-        <DrawerTitle class="p-2 text-2xl text-[#808000]">Menu Options</DrawerTitle>
+        <DrawerTitle class="p-2 text-2xl text-[#808000]"> {{ t('menu.options') }} </DrawerTitle>
         <separator class="mt-2 mx-2bg-gray-300"></separator>
       </DrawerHeader>
       <div class="px-4">
@@ -45,7 +49,7 @@ const components: { title: string, href: string, description: string }[] = [
             <CollapsibleTrigger as-child>
               <div class="flex items-center space-x-4 px-2 flex-row justify-between">
                 <p class="text-sm font-semibold">
-                  Experience
+                  {{ t('menu.experience') }}
                 </p>
                 <Button variant="secondary" size="sm" class="p-0 rounded-full">
                   <ChevronUpDownIcon class="h-4 w-4" />
@@ -66,18 +70,18 @@ const components: { title: string, href: string, description: string }[] = [
         </Collapsible>
         <div class="flex gap-8 flex-col pb-4">
           <div class="text-sm font-semibold space-x-4 px-2">
-            <a href="/blogs">
-              Blogs
+            <a :href="localePath('/blogs')">
+              {{ t('menu.blog') }}
             </a>
           </div>
           <div class="text-sm font-semibold space-x-4 px-2">
-            <a href="/personal">
-              Personal
+            <a :href="localePath('/personal')">
+              {{ t('menu.personal') }}
             </a>
           </div>
           <div class="text-sm font-semibold space-x-4 px-2">
-            <a href="/home/technique/dev/technique/front-end/pages/contact">
-              Contact
+            <a :href="localePath('/contact')">
+              {{ t('menu.contact') }}
             </a>
           </div>
         </div>

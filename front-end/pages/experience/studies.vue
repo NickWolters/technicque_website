@@ -21,6 +21,8 @@
   const { data } = await useFetch('http:localhost:8000/api/study');
   const studyArray = data.value as Array<Study>;
 
+  const { t } = useI18n();
+
   const studyCardList = studyArray.map((value, index) => {
       const {data: icon, refresh} = useFetch(`http://localhost:8000/api/study/${value.id}/download`, {
           onResponseError: function ({response}) {
@@ -39,8 +41,8 @@
 
 <template>
   <div class="justify-center px-8 flex flex-col items-center pb-10">
-    <h2 class="p-8 font-medium text-4xl text-[#808000]">Studies</h2>
-    <p>This page contains all the studies I have chosen and done during my carreer.</p>
+    <h2 class="p-8 font-medium text-4xl text-[#808000]">{{ t('studies.title') }}</h2>
+    <p>{{ t('studies.subtext') }}</p>
   </div>
   <div class="grid grid-cols-1 lg:grid-cols-2 grid-rows 5 gap-6 px-2 lg:px-9 lg:pb-10" >
     <div v-for="studyCard in studyCardList">

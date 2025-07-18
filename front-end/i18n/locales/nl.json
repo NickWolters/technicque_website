@@ -1,3 +1,57 @@
 {
-  "welcome": "Welkom technicus!"
+  "blog" : {
+    "last_update" : "Laatste update: "
+  },
+  "contact" : {
+    "content" : "Inhoud",
+    "content_subtext" : "Om het veld te {increase} sleep het veld naar beneden rechts onderaan.",
+    "description" : "Wil je graag colleboraten of als je vraag af stuur me een bericht en ik zal zo snel mogelijk beantwoorden.",
+    "email" : "Mailadres",
+    "increase" : "vergroten",
+    "name" : "Naam",
+    "name_subtext" : "Vul alsjeblieft je volledige naam in.",
+    "send" : "Verzenden",
+    "title" : "Contact Formulier"
+  },
+  "experience" : {
+    "since": "Sinds"
+  },
+  "language" : {
+    "en" : "Engels",
+    "nl" : "Nederlands",
+    "title" : "Talen"
+  },
+  "menu" : {
+    "blog" : "Blog",
+    "blog_tabs" : {
+      "subtext": "Persoonlijke blogs over tech, design of elk ander onderwerp waar mijn oog op valt.",
+      "title": "Technique's Blog"
+    },
+    "contact" : "Contact",
+    "experience" : "Ervaringen",
+    "experience_tabs" : {
+      "studies" : "Studie",
+      "studies_subtext" : "Versameling van alle verkregen studies en certificaten.",
+      "techniques" : "Techniek",
+      "techniques_subtext" : "Alle technieken waar ik mee heb gewerkt en ervaren in ben.",
+      "work" : "Werk Ervaring",
+      "work_subtext" : "Versameling van alle voorgaand opgedaande werkervaring"
+    },
+    "home": "Home",
+    "options": "Menu Opties",
+    "personal" : "Wie ben ik"
+  },
+  "subjects": {
+    "title": "Technieken",
+    "subtext" : "Deze pagina geef een overzicht van alle technische and non-technische skills die ik heb verkregen."
+  },
+  "studies": {
+    "title": "Studie",
+    "subtext" : "Deze pagina geef een overzicht van alle studies die ik heb gekozen en behaald tijdens mijn cariere."
+  },
+  "welcome": "Welkom technicus!",
+  "work": {
+    "title": "Werk Ervaring",
+    "subtext" : "Een overzicht van alle bedrijven waar ik gewerkt heb tijdens mijn ervaring."
+  }
 }

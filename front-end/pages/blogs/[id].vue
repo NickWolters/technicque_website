@@ -26,7 +26,3 @@ const blog_content = blog.value.content;
       </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

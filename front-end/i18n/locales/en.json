@@ -1,3 +1,58 @@
 {
-  "welcome": "Welcome technician!"
+  "blog" : {
+    "last_update" : "Last update at: "
+  },
+  "contact" : {
+    "content" : "Content",
+    "content_subtext" : "To {increase} the size of this field drag down on the bottom right side.",
+    "description" : "If you want to send a personal message or collaborate on a project shoot me a message, and I'll try to respond as quick as possible.",
+    "email" : "Email address",
+    "increase" : "increase",
+    "name" : "Name",
+    "name_subtext" : "Please enter your full name.",
+    "send" : "Send",
+    "title" : "Contact Form"
+  },
+  "experience" : {
+    "since": "Since"
+  },
+
+  "language" : {
+    "en" : "English",
+    "nl" : "Dutch",
+    "title" : "Language"
+  },
+  "menu" : {
+    "blog" : "Blog",
+    "blog_tabs" : {
+      "subtext": "Personal blogs related to either tech, design or any other subject that might interest me personally.",
+      "title": "Technique's Blog"
+    },
+    "contact" : "Contact",
+    "experience" : "Experience",
+    "experience_tabs" : {
+      "studies" : "Studies",
+      "studies_subtext" : "A list of all obtained studies and certificates.",
+      "techniques" : "Techniques",
+      "techniques_subtext" : "All technical and non-technical obtained experiences.",
+      "work" : "Work Experience",
+      "work_subtext" : "A list of all current and previous working experiences.",
+    },
+    "home": "Home",
+    "options": "Menu Options",
+    "personal" : "Personal"
+  },
+  "subjects": {
+    "title": "Techniques",
+    "subtext" : "These are all the technical and non-technical skill I have achieved during my studies."
+  },
+  "studies": {
+    "title": "Studies",
+    "subtext" : "This page contains all the studies I have chosen and done during my career."
+  },
+  "welcome": "Welcome technician!",
+  "work": {
+    "title": "Work Experience",
+    "subtext" : "These are all the companies I have worked for during my live time."
+  }
 }

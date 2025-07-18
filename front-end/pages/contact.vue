@@ -22,7 +22,7 @@ const formSchema = toTypedSchema(z.object({
   email: z.string().min(5).email().max(100),
   content: z.string().min(20),
 }))
-
+const { t } = useI18n();
 
 const { isFieldDirty, handleSubmit } = useForm({
   validationSchema: formSchema,
@@ -43,18 +43,18 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <div class="items-center flex flex-col gap-6">
     <div class="items-center flex flex-col gap-10 py-8">
-      <h1 class="text-3xl lg:text-6xl text-[#808000]"> Contact Form </h1>
-      <p class="font-light text-sm lg:text-md px-8"> Place a general piece of text about the contact form. </p>
+      <h1 class="text-3xl lg:text-6xl text-[#808000]"> {{ t('contact.title') }}</h1>
+      <p class="font-light text-sm lg:text-md px-8"> {{ t('contact.description') }} </p>
     </div>
     <form class="w-2/3 space-y-6" @submit="onSubmit">
       <FormField v-slot="{ componentField }" name="full_name" :validate-on-blur="!isFieldDirty">
         <FormItem>
-          <FormLabel>Name</FormLabel>
+          <FormLabel>{{ t('contact.name') }}</FormLabel>
           <FormControl>
-            <Input type="text" placeholder="Full Name" v-bind="componentField" />
+            <Input type="text" :placeholder="t('contact.name')" v-bind="componentField" />
           </FormControl>
           <FormDescription>
-            Please enter your full name.
+            {{ t('contact.name_subtext') }}
           </FormDescription>
           <FormMessage />
         </FormItem>
@@ -62,9 +62,9 @@ const onSubmit = handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="email" :validate-on-blur="!isFieldDirty">
         <FormItem>
-          <FormLabel>Your Email</FormLabel>
+          <FormLabel>{{ t('contact.email') }}</FormLabel>
           <FormControl>
-            <Input type="email" placeholder="Email-address" v-bind="componentField" />
+            <Input type="email" :placeholder="t('contact.email')" v-bind="componentField" />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -72,17 +72,24 @@ const onSubmit = handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="content" :validate-on-blur="!isFieldDirty">
         <FormItem>
-          <FormLabel>Content</FormLabel>
+          <FormLabel>{{ t('contact.content') }}</FormLabel>
           <FormControl>
              <Textarea
-                 placeholder="Tell your story here."
+                 :placeholder="t('contact.content')"
                  class="h-40"
                  v-bind="componentField"
              />
           </FormControl>
           <FormMessage />
           <FormDescription>
-            <i>To <b>increase</b> the size of this field drag down on the bottom right side.</i>
+            <i18n-t
+                tag="p"
+                keypath="contact.content_subtext"
+            >
+              <template #increase>
+                <b>{{ t('contact.increase') }}</b>
+              </template>
+            </i18n-t>
           </FormDescription>
         </FormItem>
       </FormField>
@@ -90,7 +97,7 @@ const onSubmit = handleSubmit(async (values) => {
       <div class="flex items-center flex-col pt-10">
         <!-- TODO: Enable submission when Resend domain is fixed. -->
         <Button type="submit" class="bg-[#808000] font-bold text-xl px-20" disabled="true">
-          Send
+          {{ t('contact.send') }}
         </Button>
       </div>
     </form>

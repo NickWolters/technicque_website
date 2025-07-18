@@ -5,19 +5,21 @@ import {Button} from "~/components/shadcn/button";
 import {LanguageIcon, XMarkIcon} from "@heroicons/vue/24/solid";
 import {Separator} from "~/components/shadcn/separator";
 
-const languages: { name: string, href: string, src: string }[] = [
+const language_images: { code: string, src: string }[] = [
   {
-    name: 'English',
-    href: '/en',
+    code: 'en',
     src: new URL('~/assets/images/gb.svg', import.meta.url).href,
   },
   {
-    name: 'Dutch',
-    href: '/nl',
+    code: 'nl',
     src: new URL('~/assets/images/nl.svg', import.meta.url).href,
   },
-]
+];
 
+const { t } = useI18n();
+const localePath = useLocalePath();
+const { locale, locales } = useI18n();
+const switchLocalePath = useSwitchLocalePath();
 </script>
 
 <template>
@@ -29,22 +31,20 @@ const languages: { name: string, href: string, src: string }[] = [
     </DrawerTrigger>
     <DrawerContent class="bg-[#F4EFE6]">
       <DrawerHeader>
-        <DrawerTitle>Languages</DrawerTitle>
+        <DrawerTitle> {{ t('language.title') }} </DrawerTitle>
       </DrawerHeader>
       <div class="px-2">
-        <ul class="grid gap-4 p-4">
-          <li v-for="language in languages" :key="language.name" class="items-end">
-            <div >
+        <ul class="grid gap-3 p-4 md:grid-cols-1 lg:w-[300px]">
+          <li v-for="{code} in locales" :key="code" class="items-end ">
               <a
-                  :href="language.href"
+                  :href="switchLocalePath(code)"
                   class="flex select-none rounded-md leading-none no-underline outline-none transition-colors hover:bg-accent
-                     hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground justify-items-stretch">
-                <div class="inline-flex gap-3">
-                  <img :src="language.src" width="32" height="32" class="rounded-full"/>
-                  <div class="p-2 text-sm font-medium leading-none">{{ language.name }}</div>
+                      hover:text-green-500 hover:font-bold focus:bg-accent focus:text-accent-foreground justify-items-stretch">
+                <div class="inline-flex gap-3 font-light">
+                  <img :src="language_images.find(i => i.code === code)?.src" width="32" height="32" class="rounded-full"/>
+                  <div class="p-2 text-sm leading-none">{{ t('language.' + code) }}</div>
                 </div>
               </a>
-            </div>
             <Separator class="my-2 bg-gray-200"/>
           </li>
         </ul>

@@ -11,14 +11,7 @@ export default defineNuxtConfig({
 
   modules: ['shadcn-nuxt', '@nuxtjs/i18n', '@pinia/nuxt'],
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: '',
-    /**
-     * Directory that the component lives in.
-     * @default "./components/ui"
-     */
     componentDir: './components/shadcn'
   },
   i18n: {
@@ -27,7 +20,8 @@ export default defineNuxtConfig({
       { code: 'en', name: 'English', file: 'en.json' },
       { code: 'nl', name: 'Nederlands', file: 'nl.json' }
     ],
-    vueI18n: './i18n/i18n.config.ts'
+    vueI18n: './i18n/i18n.config.ts',
+    strategy: 'prefix_except_default',
   },
 
   vite: {
