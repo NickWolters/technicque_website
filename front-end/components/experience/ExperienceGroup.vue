@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CalendarIcon } from 'lucide-vue-next'
+import { ChevronDoubleRightIcon, BoltIcon } from "@heroicons/vue/24/solid";
 
 import {
   Avatar,
@@ -30,7 +31,25 @@ defineProps<{
 const currentCardImageURL = ref('');
 const { t } = useI18n();
 
-async function getIcon(id: number) {
+function get_proficiency_related_color(color: string) : string {
+  switch (color) {
+    case "minimal":
+      return 'text-[#F78914]';
+    case "basic":
+      return 'text-[#FFDA38]';
+    case "ok":
+      return 'text-[#C2D96C]';
+    case "good":
+      return 'text-[#83AB3E]';
+    case "excellent":
+      return 'text-[#547517]';
+    default:
+      return 'text-[#000000]';
+  }
+}
+
+
+    async function getIcon(id: number) {
   if (id != null && id >= 1) {
     await useFetch(`http://localhost:8000/api/experience/download/${id}`, {
       onResponse: function ({response}) {
@@ -42,8 +61,11 @@ async function getIcon(id: number) {
 </script>
 
 <template>
-  <div class="flex gap-4 px-10 lg:px-30 py-6 flex-col mb-6">
-    <div class="font-bold text-3xl">{{ experience_group.name }}</div>
+  <div class="flex gap-5 px-10 lg:px-30 py-6 flex-col mb-6">
+    <div class="font-bold text-3xl flex flew-row gap-4">
+      <ChevronDoubleRightIcon class="h-8 w-8" />
+      {{ experience_group.name }}
+    </div>
     <Separator></Separator>
     <span class="pt-2" v-html="experience_group.description"></span>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 pt-4 py-2">
@@ -75,7 +97,13 @@ async function getIcon(id: number) {
                     {{ t('experience.since') }} <span v-html="experience.start_year"></span>
                   </span>
                 </div>
-              </div>
+                <div class="flex items-center pt-2">
+                  <BoltIcon class="mr-2 h-4 w-4" :class="`${get_proficiency_related_color(experience.proficiency)}`" />
+                  <span class="text-xs text-muted-foreground">
+                    {{ t('experience.proficiency') }} <span v-html="experience.proficiency"></span>
+                  </span>
+                </div>
+            </div>
             </div>
           </HoverCardContent>
         </HoverCard>

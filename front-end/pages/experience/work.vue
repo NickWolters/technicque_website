@@ -3,7 +3,14 @@
 
   interface Job {
     description: string,
-    experiences: any,
+    experiences : [{
+      title: string,
+      description: string,
+      icon_abbreviation: string,
+      id: number,
+      start_year: number
+      experience_group_id: number,
+    }],
     id: number,
     start_month: number,
     start_year: number,
@@ -17,8 +24,8 @@
 
   const { t } = useI18n();
 
-  const jobCardList = jobArray.map((value, index) => {
-    const {data: icon, refresh} = useFetch(`http://localhost:8000/api/work/${value.id}/download`, {
+  const jobCardList = jobArray.map((value) => {
+    const {data: icon} = useFetch(`http://localhost:8000/api/work/${value.id}/download`, {
       onResponseError: function ({response}) {
         console.log(response);
       }
@@ -29,6 +36,7 @@
       iconUrl: icon.value
     }
   })
+
 </script>
 
 <template>

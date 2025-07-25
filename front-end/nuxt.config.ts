@@ -2,18 +2,13 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  devtools: { enabled: true },
   css: ['~/assets/css/main.css', '~/assets/scss/main.scss'],
 
+  devtools: { enabled: true },
   devServer: {
     url: 'https://localhost:8000'
   },
 
-  modules: ['shadcn-nuxt', '@nuxtjs/i18n', '@pinia/nuxt'],
-  shadcn: {
-    prefix: '',
-    componentDir: './components/shadcn'
-  },
   i18n: {
     defaultLocale: 'en',
     locales: [
@@ -22,6 +17,13 @@ export default defineNuxtConfig({
     ],
     vueI18n: './i18n/i18n.config.ts',
     strategy: 'prefix_except_default',
+  },
+
+  modules: ['shadcn-nuxt', '@nuxtjs/i18n', '@pinia/nuxt'],
+
+  shadcn: {
+    prefix: '',
+    componentDir: './components/shadcn'
   },
 
   vite: {

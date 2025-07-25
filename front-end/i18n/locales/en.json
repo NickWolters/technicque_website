@@ -1,6 +1,7 @@
 {
   "blog" : {
-    "last_update" : "Last update at: "
+    "last_update" : "Last update at: ",
+    "not_yet_translated" : "Blog has not yet been translated."
   },
   "contact" : {
     "content" : "Content",
@@ -14,6 +15,7 @@
     "title" : "Contact Form"
   },
   "experience" : {
+    "proficiency" : "Proficiency",
     "since": "Since"
   },
 

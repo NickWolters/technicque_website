@@ -1,4 +1,5 @@
 <template>
+  <NuxtLoadingIndicator />
   <menubar v-if="width > 600"></menubar>
   <Mobile_header v-if="width < 600"/>
   <NuxtLayout>

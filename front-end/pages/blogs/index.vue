@@ -5,12 +5,15 @@
   import PaginationNext from "~/components/shadcn/pagination/PaginationNext.vue";
   import PaginationItem from "~/components/shadcn/pagination/PaginationItem.vue";
   import {ClockIcon} from "@heroicons/vue/24/solid";
+  import type {BlogContent} from "~/pages/blogs/[id].vue";
+  import {getLocaleSpecificVariable} from "~/lib/utils";
 
   const { data : blogs } = await useFetch('http:localhost:8000/api/blogs/');
-  const first_blog = blogs.value[0];
-  const other_blogs = blogs.value.filter((blog, index) => index !== 0)
+  const first_blog = blogs.value[0] as BlogContent;
+  const other_blogs = blogs.value.filter((blog, index) => index !== 0) as Array<BlogContent>
 
   const { t } = useI18n();
+  const localePath = useLocalePath();
 
   //Pagination Information
   const blogs_per_page = 6;
@@ -18,7 +21,7 @@
   let page_index = 1;
 
    function open_blog(id: number) {
-     window.location.href = "/blogs/" + id;
+     window.location.href = localePath("/blogs/" + id);
    }
 
    function blogs_on_page() {
@@ -36,8 +39,8 @@
 <template>
   <div class="grid grid-cols-5 grid-rows-1 lg:h-150 mx-6 bg-[#F4EFE6] hover:bg-[#E2CBA3] hover:shadow-2xl rounded-3xl" v-on:click="open_blog(first_blog.id)">
     <div class="p-10 flex gap-6 flex-col overflow-hidden col-span-2">
-      <div v-html="first_blog.title" class="text-6xl text-[#808000]" />
-      <div v-html="first_blog.description" class="text-lg italic line-clamp-6" />
+      <div v-html="getLocaleSpecificVariable(first_blog.title)" class="text-6xl text-[#808000]" />
+      <div v-html="getLocaleSpecificVariable(first_blog.description)" class="text-lg italic line-clamp-6" />
       <div class="flex flex-row gap-4 text-sm p-1 px-6 h-14 md:h-10 bg-[#87D3E4] rounded-2xl text-white">
         <ClockIcon class="py-1"/>
         <i18n-d class="py-3 md:py-1" tag="p" :value="new Date(first_blog.created_at)"></i18n-d>
@@ -57,8 +60,13 @@
         <div class="flex flex-col rounded-2xl w-100 bg-[#F4EFE6] hover:bg-[#E2CBA3] hover:shadow-lg items-center h-125" v-on:click="open_blog(blog.id)">
           <img class="w-full rounded-t-2xl top-0" src="../../assets/images/blog_base_icon.svg" alt="" />
           <div class="px-4 pb-8">
-            <div v-html="blog.title" class="text-lg py-4 text-[#808000]"/>
-            <div v-html="blog.description" class="text-md italic line-clamp-4" />
+            <div  v-if="getLocaleSpecificVariable(blog.title) !== undefined || getLocaleSpecificVariable(blog.description) !== undefined">
+              <div v-html="getLocaleSpecificVariable(blog.title)" class="text-lg py-4 text-[#808000]"/>
+              <div v-html="getLocaleSpecificVariable(blog.description)" class="text-md italic line-clamp-4" />
+            </div>
+            <div v-else>
+              <p class="py-6 text-md italic line-clamp-4 text-lg"> {{ t("blog.not_yet_translated") }} </p>
+            </div>
           </div>
         </div>
       </div>

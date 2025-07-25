@@ -4,26 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Experience;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class ExperienceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : Collection
     {
-        return Experience::all();
+        return Experience::with('experience_group')->get(0);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id) : Experience
     {
-        return Experience::all()->where('id', $id)->get();
+        return Experience::with('experience_group')->where('id', $id)->first();
     }
 
-    public function download($id)
+    public function download($id) : string
     {
         $post = Experience::findOrFail($id);
         $media = $post->getFirstMedia('experiences');

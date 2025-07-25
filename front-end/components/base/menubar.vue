@@ -10,6 +10,7 @@ import {
 } from '~/components/shadcn/navigation-menu'
 import {Separator} from "~/components/shadcn/separator";
 import {PencilSquareIcon, CogIcon, UserCircleIcon, InformationCircleIcon} from "@heroicons/vue/24/solid";
+import {getLocaleSpecificVariable} from "~/lib/utils";
 
 const { t, locale, locales } = useI18n();
 const localePath = useLocalePath();
@@ -36,13 +37,20 @@ const components: { title: string, href: string, subtext: string }[] = [
 const language_images: { code: string, src: string }[] = [
   {
     code: 'en',
-    src: new URL('~/assets/images/gb.svg', import.meta.url).href,
+    src: new URL('/assets/images/gb.svg', import.meta.url).href,
   },
   {
     code: 'nl',
-    src: new URL('~/assets/images/nl.svg', import.meta.url).href,
+    src: new URL('/assets/images/nl.svg', import.meta.url).href,
   },
 ];
+
+useSeoMeta({
+  en: '/en.svg',
+  nl: '/nl.svg'
+})
+
+const currentLanguageImage = language_images.find(item => item.code === locale.value)!.src;
 
 const title_hover = ref(false);
 const personal_hover = ref(false);
@@ -104,11 +112,12 @@ const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
               <li v-for="blog in blogs" :key="blog.title" >
                 <NavigationMenuLink as-child>
                   <a
+                      v-if="getLocaleSpecificVariable(blog.title) !== undefined || getLocaleSpecificVariable(blog.description) !== undefined"
                       :href="localePath('/blogs/' + blog.id)"
                       class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground hover:text-green-500"
                   >
-                    <p v-html="blog.title" />
-                    <p v-html="blog.description" class="line-clamp-2 text-sm leading-snug text-muted-foreground" />
+                    <p v-html="getLocaleSpecificVariable(blog.title)" />
+                    <p v-html="getLocaleSpecificVariable(blog.description)" class="line-clamp-2 text-sm leading-snug text-muted-foreground" />
                   </a>
                 </NavigationMenuLink>
               </li>
@@ -128,7 +137,9 @@ const { data : blogs } = await useFetch('http:localhost:8000/api/blogs');
           </NavigationMenuLink>
         </NavigationMenuItem >
         <NavigationMenuItem >
-          <NavigationMenuTrigger><img :src="language_images.find(i => i.code === locale)?.src" width="24" height="24" class="rounded-2xl"/></NavigationMenuTrigger>
+          <NavigationMenuTrigger>
+            <img :src="currentLanguageImage" width="24" height="24" class="rounded-2xl" alt=""/>
+          </NavigationMenuTrigger>
           <NavigationMenuContent class="!right-0 left-auto">
             <p class="text-2xl py-2 text-center font-semibold text-[#808000]">{{ t('language.title') }}</p>
             <ul class="grid w-[150px] gap-3 p-4 md:w-[200px] md:grid-cols-1 lg:w-[300px]">

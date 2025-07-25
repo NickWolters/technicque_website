@@ -10,17 +10,23 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BlogResource extends Resource
 {
+    use Translatable;
+
+    public static function getTranslatableLocales(): array
+    {
+        return ['en', 'nl'];
+    }
+
     protected static ?string $model = Blog::class;
 
     protected static ?string $navigationGroup = 'Blog';

@@ -1,6 +1,7 @@
 {
   "blog" : {
-    "last_update" : "Laatste update: "
+    "last_update" : "Laatste update: ",
+    "not_yet_translated" : "Blog is nog niet vertaald."
   },
   "contact" : {
     "content" : "Inhoud",
@@ -14,6 +15,7 @@
     "title" : "Contact Formulier"
   },
   "experience" : {
+    "proficiency" : "Niveau",
     "since": "Sinds"
   },
   "language" : {

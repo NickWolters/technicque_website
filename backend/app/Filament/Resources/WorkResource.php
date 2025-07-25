@@ -4,8 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\WorkResource\Pages;
 use App\Filament\Resources\WorkResource\RelationManagers;
-use App\Models\Experience;
-use App\Models\Study;
 use App\Models\Work;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
@@ -16,11 +14,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class WorkResource extends Resource
 {

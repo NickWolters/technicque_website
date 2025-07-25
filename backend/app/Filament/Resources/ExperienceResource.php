@@ -2,25 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ExperienceResource\Pages;
-use App\Filament\Resources\ExperienceResource\RelationManagers;
-use App\Models\Experience;
-use App\Models\ExperienceGroup;
-use App\Models\ExperienceLevel;
-use App\Models\Study;
-use Carbon\Carbon;
-use Filament\Forms;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
+use App\Filament\Resources\ExperienceResource\Pages;use App\Filament\Resources\ExperienceResource\Pages\RelationsManagers\ExperienceGroupsRelationManager;use App\Filament\Resources\ExperienceResource\RelationManagers;use App\Models\Experience;use App\Models\ExperienceGroup;use App\Models\ExperienceLevel;use Carbon\Carbon;use Filament\Forms\Components\RichEditor;use Filament\Forms\Components\Select;use Filament\Forms\Components\SpatieMediaLibraryFileUpload;use Filament\Forms\Components\TextInput;use Filament\Forms\Form;use Filament\Resources\Resource;use Filament\Tables;use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ExperienceResource extends Resource
 {
@@ -69,7 +53,7 @@ class ExperienceResource extends Resource
                 TextColumn::make('proficiency'),
             ])
             ->filters([
-                //
+                SelectFilter::make('ExperienceGroup')->relationship('experience_group', 'name')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -85,7 +69,7 @@ class ExperienceResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

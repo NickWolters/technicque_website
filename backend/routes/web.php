@@ -8,6 +8,7 @@ use App\Http\Controllers\StudyController;
 use App\Http\Controllers\ExperienceGroupController;
 use App\Http\Controllers\WorkController;
 
+use App\Models\Experience;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -27,6 +28,7 @@ Route::get('api/contact/{id}/download', [ContactController::class, 'download']);
 Route::post('contact/form', [ContactController::class, 'form']);
 
 Route::resource('api/study', StudyController::class);
+Route::resource('api/experience', ExperienceController::class);
 Route::resource('api/experience_group', ExperienceGroupController::class);
 Route::resource('api/work', WorkController::class);
 Route::resource("api/blogs", BlogController::class);

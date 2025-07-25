@@ -4,16 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Carbon\Carbon;
-
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : Collection
     {
         return Contact::all()->map(function ($contact) {
             $contact->media_url = $contact->getMedia('contacts')->map(function ($media) {
@@ -26,9 +24,9 @@ class ContactController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id) : Contact
     {
-        $contact = Contact::all()->where('id', $id)->toJson();
+        return Contact::all()->where('id', $id)->first();
     }
 
     public function download($id)

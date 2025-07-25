@@ -1,5 +1,8 @@
 <script setup lang="ts">
   const { data : experience_groups } = await useFetch('http:localhost:8000/api/experience_group');
+  console.log(experience_groups);
+
+
 
   const { t } = useI18n();
 </script>
